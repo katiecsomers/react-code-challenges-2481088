@@ -1,29 +1,53 @@
-import { useState } from 'react'
+import { useState } from "react";
 
-export default function FormValidator () {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [passwordConfirm, setPasswordConfirm] = useState('')
+export default function FormValidator() {
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
+	const [passwordConfirm, setPasswordConfirm] = useState("");
+	const [message, setMessage] = useState(null);
 
-  return (
-    <form>
-      <h2>Sign Up!</h2>
-      <label htmlFor='email'>Email</label>
-      <input
-        type='text' name='email'
-        onChange={e => setEmail(e.target.value)}
-      />
-      <label htmlFor='password'>Password</label>
-      <input
-        type='password' name='password'
-        onChange={e => setPassword(e.target.value)}
-      />
-      <label htmlFor='password-confirm'>Confirm Password </label>
-      <input
-        type='password' name='password-confirm'
-        onChange={e => setPasswordConfirm(e.target.value)}
-      />
-      <input type='submit' value='Submit' />
-    </form>
-  )
+	function handleSubmit(event) {
+		event.preventDefault();
+		if (
+			email.length > 0 &&
+			password.length >= 8 &&
+			password === passwordConfirm &&
+			email.includes("@")
+		) {
+			setMessage("User Created!");
+		} else {
+			setMessage(
+				"Try again, please enter a valid email and passwords need to be 8 characters"
+			);
+		}
+	}
+
+	return (
+		<form onSubmit={handleSubmit}>
+			<h2>Sign Up!</h2>
+			<label htmlFor="email">Email</label>
+			<input
+				type="text"
+				name="email"
+				onChange={(e) => setEmail(e.target.value)}
+			/>
+			<label htmlFor="password">Password</label>
+			<input
+				type="password"
+				name="password"
+				onChange={(e) => setPassword(e.target.value)}
+			/>
+			<label htmlFor="password-confirm">Confirm Password </label>
+			<input
+				type="password"
+				name="password-confirm"
+				onChange={(e) => setPasswordConfirm(e.target.value)}
+			/>
+			<input
+				type="submit"
+				value="Submit"
+			/>
+			{message}
+		</form>
+	);
 }
